@@ -9,4 +9,9 @@ https://support.ookla.com/hc/en-us/articles/32139787616141-Ubuntu-24-04-noble. O
 Testado no Ubuntu 24.04 mas deve funcionar em outras distribuições que utilizem o APT para instalar pacotes.
 
 
+O script speedtest.sh realiza o teste de velocidade e deve estar em /speedtest.
 
+Dependências:
+* wget
+* jq
+* base64
