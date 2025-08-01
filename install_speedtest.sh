@@ -12,7 +12,7 @@ print_warning() {
     echo -e "\e[33m[AVISO]\033[0m \n $1 \n"
 }
 print_action() {
-    echo -e "\e[31m[A ^g ^cO]\033[0m \n $1 \n"
+    echo -e "\e[31m[AÇÃO]\033[0m \n $1 \n"
 }
 
 # Verifica e remove speedtest & speedtest-cli
