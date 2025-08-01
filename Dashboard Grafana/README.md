@@ -27,4 +27,5 @@ sudo -u grafana grafana-cli plugins install dalvany-image-panel
 
 <h1>DEMONSTRAÇÃO DO DASHBOARD</h1>
 
-<img width="1919" height="1008" alt="Speedtest-2025" src="https://github.com/user-attachments/assets/4ead914d-9863-49fb-ba75-00e0ad494e74" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/0bbd4525-381c-4872-814f-02bb2903e0a5" />
+
