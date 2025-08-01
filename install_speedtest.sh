@@ -83,4 +83,4 @@ print_success "Lista de pacotes atualizada."
 # Instala o speedtest
 print_action "Instalando o speedtest..."
 sudo apt install speedtest -y >/dev/null 2>&1
-print_success "speedtest instalado com sucesso  ^=^n^i \n"
+print_success "speedtest instalado com sucesso!! \n"
