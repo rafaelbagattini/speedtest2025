@@ -1,22 +1,24 @@
 # speedtest2025
 Script de instalação do Speedtest CLI para Linux
 
-O script install_speedtest.sh remove a versão anterior (speedtest-cli que está no repositório padrão) e instala a versão oficial da OOKLA.
+* O script install_speedtest.sh remove a versão anterior (speedtest-cli que está no repositório padrão) e instala a versão oficial da OOKLA.
 
-Segundo esse artigo no site da OOKLA, não há repositório para o Ubuntu "noble" e a orientação é modificar no arquivo de noble para jammy.
+📰 Segundo esse artigo no site da OOKLA, não há repositório para o Ubuntu "noble" e a orientação é modificar no arquivo de noble para jammy.
 
 https://support.ookla.com/hc/en-us/articles/32139787616141-Ubuntu-24-04-noble.
 
-O script verifica a versão e adapta o arquivo, caso seja necessário.
+O <b>install_speedtest.sh</b> verifica a versão e adapta o arquivo, caso seja necessário.
 
 Testado no Ubuntu 24.04 mas deve funcionar em outras distribuições que utilizem o APT para instalar pacotes.
 
+<br>
 <h2>🔵 COMO INSTALAR O SPEEDTEST</h2>
 
+Execute o comando abaixo para executar o <b>install_speedtest.sh</b>
 ```bash
 curl -fSSL https://raw.githubusercontent.com/rafaelbagattini/speedtest2025/refs/heads/main/install_speedtest.sh | bash
 ```
-Após instalar o pacote do Speedtest, execute a primeira vez (apenas digite <b>speedtest</b> e pressione >ENTER< e aceite os termos.
+Após instalar o pacote do Speedtest, execute a primeira vez (apenas digite <b>speedtest</b> e pressione >ENTER<) e aceite os termos.
 
 <img width="718" height="561" alt="image" src="https://github.com/user-attachments/assets/fbd17514-4536-4e04-a87b-3973a74bb892" />
 
