@@ -17,6 +17,7 @@ Testado no Ubuntu 24.04 mas deve funcionar em outras distribuições que utilize
 curl -fSSL https://raw.githubusercontent.com/rafaelbagattini/speedtest2025/refs/heads/main/install_speedtest.sh | bash
 ```
 Após instalar o pacote do Speedtest, execute a primeira vez (apenas digite <b>speedtest</b> e pressione >ENTER< e aceite os termos.
+
 <img width="718" height="561" alt="image" src="https://github.com/user-attachments/assets/fbd17514-4536-4e04-a87b-3973a74bb892" />
 
 
