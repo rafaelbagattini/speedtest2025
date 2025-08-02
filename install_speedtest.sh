@@ -56,7 +56,7 @@ fi
 
 # Adiciona repositório do speedtest da Ookla
 print_action "Adicionando repositório oficial da Ookla..."
-curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash >/dev/null 2>&1
+curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash >/dev/null 2>&1
 print_success "Repositório adicionado com sucesso."
 
 # Verifica e ajusta arquivo de repositório speedtest.list
