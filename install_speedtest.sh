@@ -63,10 +63,10 @@ print_info "Verificando arquivo de repositório speedtest.list..."
 if [ -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
     print_action "Verificando versão do Linux..."
     distro_codename=$(source /etc/os-release && echo "$VERSION_CODENAME")
-    if [ "$distro_codename" == "noble" ]; then
-        print_action "Substituindo 'noble' por 'jammy' em speedtest.list..."
-        sed -i 's/noble/jammy/g' /etc/apt/sources.list.d/ookla_speedtest-cli.list
-        print_success "'noble' substituído por 'jammy'."
+    if [[ "$distro_codename" == "noble" || "$distro_codename" == "oracular" ]]; then
+        print_action "Substituindo $distro_codename por 'jammy' em speedtest.list..."
+        sed -i "s/$distro_codename/jammy/g" /etc/apt/sources.list.d/ookla_speedtest-cli.list
+        print_success "$distro_codename substituído por 'jammy'."
     #else
     #    print_info "Não foi necessário ajustar o arquivo."
     fi
