@@ -29,7 +29,7 @@ if dpkg -l | grep -q speedtest-cli; then
     apt remove -y speedtest-cli >/dev/null 2>&1
     print_success "speedtest-cli removido com sucesso."
 else
-    print_info "Pacote speedtest-cli n  o instalado."
+    print_info "Pacote speedtest-cli não instalado."
 fi
 
 # Verifica e remove speedtest.list
