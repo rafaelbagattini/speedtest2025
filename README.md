@@ -9,7 +9,10 @@ https://support.ookla.com/hc/en-us/articles/32139787616141-Ubuntu-24-04-noble.
 
 O <b>install_speedtest.sh</b> verifica a versão e adapta o arquivo, caso seja necessário.
 
-Testado no Ubuntu 24.04 mas deve funcionar em outras distribuições que utilizem o APT para instalar pacotes.
+Testado em:
+* Ubuntu 24.04
+* Ubuntu 24.10
+* Debian 12
 
 <br>
 <h2>🔵 COMO INSTALAR O SPEEDTEST</h2>
