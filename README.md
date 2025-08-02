@@ -3,7 +3,7 @@ Script de instalação do Speedtest CLI para Linux
 
 * O script install_speedtest.sh remove a versão anterior (speedtest-cli que está no repositório padrão) e instala a versão oficial da OOKLA.
 
-📰 Segundo esse artigo no site da OOKLA, não há repositório para o Ubuntu "noble" e a orientação é modificar no arquivo de noble para jammy.
+📰 Segundo esse artigo no site da OOKLA, não há repositório para o Ubuntu "noble" ou "oracular" e a orientação é modificar no arquivo de noble para jammy.
 
 https://support.ookla.com/hc/en-us/articles/32139787616141-Ubuntu-24-04-noble.
 
