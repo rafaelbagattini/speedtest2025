@@ -1,0 +1,792 @@
+{
+    "zabbix_export": {
+        "version": "7.4",
+        "template_groups": [
+            {
+                "uuid": "a571c0d144b14fd4a87a9d9b2aa9fcd6",
+                "name": "Templates/Applications"
+            }
+        ],
+        "templates": [
+            {
+                "uuid": "df1ad9a6af4949e5956900c03de73177",
+                "template": "Speedtest 2025",
+                "name": "Speedtest 2025",
+                "groups": [
+                    {
+                        "name": "Templates/Applications"
+                    }
+                ],
+                "items": [
+                    {
+                        "uuid": "28460f84ca6e4fd88f0cd7852328a5a1",
+                        "name": "Download",
+                        "type": "DEPENDENT",
+                        "key": "speedtest.download",
+                        "history": "30d",
+                        "value_type": "FLOAT",
+                        "trends": "90d",
+                        "units": "bps",
+                        "preprocessing": [
+                            {
+                                "type": "JSONPATH",
+                                "parameters": [
+                                    "$.download.bandwidth"
+                                ]
+                            },
+                            {
+                                "type": "MULTIPLIER",
+                                "parameters": [
+                                    "8"
+                                ]
+                            }
+                        ],
+                        "master_item": {
+                            "key": "vfs.file.contents[/speedtest/resultado.txt]"
+                        },
+                        "triggers": [
+                            {
+                                "uuid": "4c70250fda674b769f7ef3f00fe565e3",
+                                "expression": "last(/Speedtest 2025/speedtest.download,#1)<=({$VELOCIDADE.CONTRATADA} * 0.4)",
+                                "name": "Internet Lenta!!",
+                                "priority": "WARNING",
+                                "description": "Velocidade de Download abaixo de 40% do contratado."
+                            }
+                        ]
+                    },
+                    {
+                        "uuid": "10ca3c127774465793e2b0129ed2c764",
+                        "name": "Provedor",
+                        "type": "DEPENDENT",
+                        "key": "speedtest.isp",
+                        "history": "1d",
+                        "value_type": "TEXT",
+                        "preprocessing": [
+                            {
+                                "type": "JSONPATH",
+                                "parameters": [
+                                    "$.isp"
+                                ]
+                            }
+                        ],
+                        "master_item": {
+                            "key": "vfs.file.contents[/speedtest/resultado.txt]"
+                        }
+                    },
+                    {
+                        "uuid": "b3b6b44827114bb7b34e20f02f7ad3c3",
+                        "name": "Ping",
+                        "type": "DEPENDENT",
+                        "key": "speedtest.ping",
+                        "history": "30d",
+                        "value_type": "FLOAT",
+                        "trends": "90d",
+                        "units": "ms",
+                        "preprocessing": [
+                            {
+                                "type": "JSONPATH",
+                                "parameters": [
+                                    "$.ping.latency"
+                                ]
+                            }
+                        ],
+                        "master_item": {
+                            "key": "vfs.file.contents[/speedtest/resultado.txt]"
+                        }
+                    },
+                    {
+                        "uuid": "51d1287a0fe842f2861686cc57f52090",
+                        "name": "Hora do teste",
+                        "type": "DEPENDENT",
+                        "key": "speedtest.timestamp",
+                        "history": "1d",
+                        "value_type": "CHAR",
+                        "preprocessing": [
+                            {
+                                "type": "JSONPATH",
+                                "parameters": [
+                                    "$.timestamp"
+                                ]
+                            },
+                            {
+                                "type": "JAVASCRIPT",
+                                "parameters": [
+                                    "const date = new Date(value);\nconst timestampSeconds = Math.floor(date.getTime() / 1000);\nreturn ('0' + date.getDate()).slice(-2) + \"/\" + (\"0\" + (date.getMonth() + 1)).slice(-2) + \"/\" + date.getFullYear() + \" \" + ('0' + date.getHours()).slice(-2) + \":\" + ('0' + date.getMinutes()).slice(-2)"
+                                ]
+                            }
+                        ],
+                        "master_item": {
+                            "key": "vfs.file.contents[/speedtest/resultado.txt]"
+                        }
+                    },
+                    {
+                        "uuid": "0804810a5d404bb5a6b39bd4e1dc7cbd",
+                        "name": "Upload",
+                        "type": "DEPENDENT",
+                        "key": "speedtest.upload",
+                        "history": "30d",
+                        "value_type": "FLOAT",
+                        "trends": "90d",
+                        "units": "bps",
+                        "preprocessing": [
+                            {
+                                "type": "JSONPATH",
+                                "parameters": [
+                                    "$.upload.bandwidth"
+                                ]
+                            },
+                            {
+                                "type": "MULTIPLIER",
+                                "parameters": [
+                                    "8"
+                                ]
+                            }
+                        ],
+                        "master_item": {
+                            "key": "vfs.file.contents[/speedtest/resultado.txt]"
+                        }
+                    },
+                    {
+                        "uuid": "13e37d848c3c437fb6178808dbb08ad2",
+                        "name": "URL",
+                        "type": "DEPENDENT",
+                        "key": "speedtest.url.print",
+                        "history": "1d",
+                        "value_type": "TEXT",
+                        "preprocessing": [
+                            {
+                                "type": "JSONPATH",
+                                "parameters": [
+                                    "$.result.url"
+                                ]
+                            },
+                            {
+                                "type": "REGEX",
+                                "parameters": [
+                                    "^(.*)$",
+                                    "\\1.png"
+                                ]
+                            },
+                            {
+                                "type": "DISCARD_UNCHANGED"
+                            }
+                        ],
+                        "master_item": {
+                            "key": "vfs.file.contents[/speedtest/resultado.txt]"
+                        }
+                    },
+                    {
+                        "uuid": "a2c6b558e9cf478f9a1eca03b7e86f05",
+                        "name": "Print",
+                        "key": "vfs.file.contents[/speedtest/imgbase64.txt]",
+                        "delay": "1h",
+                        "history": "0",
+                        "value_type": "TEXT",
+                        "preprocessing": [
+                            {
+                                "type": "DISCARD_UNCHANGED"
+                            }
+                        ]
+                    },
+                    {
+                        "uuid": "d8db6333abb543b2b9369f3a0ad657ed",
+                        "name": "Teste de Velocidade",
+                        "key": "vfs.file.contents[/speedtest/resultado.txt]",
+                        "delay": "1h",
+                        "history": "1d",
+                        "value_type": "TEXT"
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$VELOCIDADE.CONTRATADA}",
+                        "value": "500000000",
+                        "description": "Velocidade de download contratado em bytes"
+                    }
+                ],
+                "dashboards": [
+                    {
+                        "uuid": "16d0e1903ac4451ca10acfa79000c0ae",
+                        "name": "Speedtest",
+                        "display_period": "60",
+                        "auto_start": "NO",
+                        "pages": [
+                            {
+                                "name": "Gr\u00e1fico",
+                                "widgets": [
+                                    {
+                                        "type": "svggraph",
+                                        "name": "Download",
+                                        "y": "2",
+                                        "width": "33",
+                                        "height": "5",
+                                        "fields": [
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.color_palette",
+                                                "value": "10"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "ds.0.data_set_label",
+                                                "value": "Download"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.fill",
+                                                "value": "6"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "ds.0.items.0",
+                                                "value": "Download"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.missingdatafunc",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.transparency",
+                                                "value": "2"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.width",
+                                                "value": "2"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "lefty_max",
+                                                "value": "500000000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "lefty_min",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "legend",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "reference",
+                                                "value": "AQSXQ"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "righty",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "source",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "time_period.from",
+                                                "value": "now-24h"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "time_period.to",
+                                                "value": "now"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "svggraph",
+                                        "name": "Ping",
+                                        "y": "7",
+                                        "width": "33",
+                                        "height": "5",
+                                        "fields": [
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.color_palette",
+                                                "value": "10"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "ds.0.data_set_label",
+                                                "value": "Ping"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.fill",
+                                                "value": "6"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "ds.0.items.0",
+                                                "value": "Ping"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.missingdatafunc",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.transparency",
+                                                "value": "2"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.width",
+                                                "value": "2"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "lefty_max",
+                                                "value": "10"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "lefty_min",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "legend",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "reference",
+                                                "value": "AHMFH"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "righty",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "source",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "time_period.from",
+                                                "value": "now-24h"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "time_period.to",
+                                                "value": "now"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "item",
+                                        "x": "25",
+                                        "width": "18",
+                                        "hide_header": "YES",
+                                        "fields": [
+                                            {
+                                                "type": "ITEM",
+                                                "name": "itemid.0",
+                                                "value": {
+                                                    "host": "Speedtest 2025",
+                                                    "key": "speedtest.timestamp"
+                                                }
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.0",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.1",
+                                                "value": "2"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "svggraph",
+                                        "name": "Upload",
+                                        "x": "33",
+                                        "y": "2",
+                                        "width": "33",
+                                        "height": "5",
+                                        "fields": [
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.color_palette",
+                                                "value": "10"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "ds.0.data_set_label",
+                                                "value": "Upload"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.fill",
+                                                "value": "6"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "ds.0.items.0",
+                                                "value": "Upload"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.missingdatafunc",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.transparency",
+                                                "value": "2"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "ds.0.width",
+                                                "value": "2"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "lefty_max",
+                                                "value": "400000000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "lefty_min",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "legend",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "reference",
+                                                "value": "CHLVB"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "righty",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "source",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "time_period.from",
+                                                "value": "now-24h"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "time_period.to",
+                                                "value": "now"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Gauge",
+                                "widgets": [
+                                    {
+                                        "type": "gauge",
+                                        "y": "2",
+                                        "width": "23",
+                                        "height": "5",
+                                        "hide_header": "YES",
+                                        "fields": [
+                                            {
+                                                "type": "ITEM",
+                                                "name": "itemid.0",
+                                                "value": {
+                                                    "host": "Speedtest 2025",
+                                                    "key": "speedtest.download"
+                                                }
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "max",
+                                                "value": "500000000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "min",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "needle_color",
+                                                "value": "FFFFFF"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.0",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.1",
+                                                "value": "2"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.2",
+                                                "value": "3"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.3",
+                                                "value": "4"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.4",
+                                                "value": "5"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.0.color",
+                                                "value": "FF0000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.0.threshold",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.1.color",
+                                                "value": "FF4000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.1.threshold",
+                                                "value": "100000000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.2.color",
+                                                "value": "FFFF00"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.2.threshold",
+                                                "value": "300000000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.3.color",
+                                                "value": "009900"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.3.threshold",
+                                                "value": "400000000"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "th_show_arc",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "th_show_labels",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "units_size",
+                                                "value": "10"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "gauge",
+                                        "x": "24",
+                                        "y": "2",
+                                        "width": "25",
+                                        "height": "5",
+                                        "hide_header": "YES",
+                                        "fields": [
+                                            {
+                                                "type": "ITEM",
+                                                "name": "itemid.0",
+                                                "value": {
+                                                    "host": "Speedtest 2025",
+                                                    "key": "speedtest.upload"
+                                                }
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "max",
+                                                "value": "300000000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "min",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "needle_color",
+                                                "value": "FFFFFF"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.0",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.1",
+                                                "value": "2"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.2",
+                                                "value": "3"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.3",
+                                                "value": "4"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.4",
+                                                "value": "5"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.0.color",
+                                                "value": "FF0000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.0.threshold",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.1.color",
+                                                "value": "FF4000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.1.threshold",
+                                                "value": "90000000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.2.color",
+                                                "value": "FFFF00"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.2.threshold",
+                                                "value": "150000000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.3.color",
+                                                "value": "009900"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.3.threshold",
+                                                "value": "200000000"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "th_show_arc",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "th_show_labels",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "units_size",
+                                                "value": "10"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "item",
+                                        "x": "50",
+                                        "y": "2",
+                                        "width": "22",
+                                        "height": "5",
+                                        "hide_header": "YES",
+                                        "fields": [
+                                            {
+                                                "type": "ITEM",
+                                                "name": "itemid.0",
+                                                "value": {
+                                                    "host": "Speedtest 2025",
+                                                    "key": "speedtest.ping"
+                                                }
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.0",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "INTEGER",
+                                                "name": "show.1",
+                                                "value": "2"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.0.color",
+                                                "value": "009900"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.0.threshold",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.1.color",
+                                                "value": "FF4000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.1.threshold",
+                                                "value": "4"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.2.color",
+                                                "value": "FF0000"
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "name": "thresholds.2.threshold",
+                                                "value": "5"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
