@@ -194,6 +194,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 2,
           "displayName": "DOWNLOAD",
           "mappings": [],
           "max": 500000000,
@@ -224,7 +225,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 4,
+        "w": 5,
         "x": 7,
         "y": 1
       },
@@ -243,9 +244,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
         "sizing": "auto",
-        "text": {
-          "percentSize": 1
-        }
+        "text": {}
       },
       "pluginVersion": "12.1.0",
       "targets": [
@@ -315,6 +314,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 2,
           "displayName": "UPLOAD",
           "mappings": [],
           "max": 250000000,
@@ -345,8 +345,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 4,
-        "x": 11,
+        "w": 5,
+        "x": 12,
         "y": 1
       },
       "id": 4,
@@ -459,14 +459,14 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 4,
-        "x": 15,
+        "w": 3,
+        "x": 17,
         "y": 1
       },
       "id": 11,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "center",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
@@ -564,8 +564,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 5,
-        "x": 19,
+        "w": 4,
+        "x": 20,
         "y": 1
       },
       "id": 5,
@@ -677,7 +677,7 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 20,
             "gradientMode": "scheme",
             "hideFrom": {
               "legend": false,
@@ -686,8 +686,11 @@
             },
             "insertNulls": false,
             "lineInterpolation": "smooth",
-            "lineWidth": 1,
-            "pointSize": 5,
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 1,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -703,7 +706,7 @@
           },
           "fieldMinMax": false,
           "mappings": [],
-          "max": 8,
+          "max": 10,
           "min": 1,
           "thresholds": {
             "mode": "absolute",
@@ -718,7 +721,7 @@
               },
               {
                 "color": "dark-red",
-                "value": 6
+                "value": 8
               }
             ]
           }
@@ -855,7 +858,7 @@
         "slideshow": {
           "duration": 5000,
           "enable": true,
-          "infinite": false,
+          "infinite": true,
           "pauseOnHover": false,
           "transition": "Slide",
           "transition_duration": 200
@@ -956,7 +959,7 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 25,
+            "fillOpacity": 20,
             "gradientMode": "scheme",
             "hideFrom": {
               "legend": false,
@@ -969,7 +972,7 @@
               "fill": "solid"
             },
             "lineWidth": 2,
-            "pointSize": 6,
+            "pointSize": 1,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1009,7 +1012,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 11,
+        "w": 12,
         "x": 0,
         "y": 17
       },
@@ -1108,7 +1111,7 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 25,
+            "fillOpacity": 20,
             "gradientMode": "scheme",
             "hideFrom": {
               "legend": false,
@@ -1121,7 +1124,7 @@
               "fill": "solid"
             },
             "lineWidth": 2,
-            "pointSize": 6,
+            "pointSize": 1,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1161,8 +1164,8 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 11,
-        "x": 11,
+        "w": 12,
+        "x": 12,
         "y": 17
       },
       "id": 8,
@@ -1241,7 +1244,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "auto",
+  "refresh": "1h",
   "schemaVersion": 41,
   "tags": [],
   "templating": {
@@ -1255,6 +1258,6 @@
   "timezone": "browser",
   "title": "Speedtest",
   "uid": "f0e9bc1d-0a40-4ec5-b5dd-aaedd3af299c",
-  "version": 10,
+  "version": 13,
   "weekStart": ""
 }
