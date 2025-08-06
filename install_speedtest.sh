@@ -12,8 +12,6 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-
-
 # Exibe a caixa de diálogo com tamanho fixo e título estilizado
 whiptail --msgbox "Este instalador irá remover o speedtest-cli\n  e instalar o speedtest oficial da OOKLA." 8 50
 
@@ -62,8 +60,8 @@ fi
     echo -e "Etapa 5:\nInstalando nova versão do speedtest..."
     echo "XXX"
     apt install speedtest -y > /dev/null 2>&1
-    sleep 2
-} | whiptail --gauge "Instalando Speedtest CLI. Aguarde..." 8 50 0
+    sleep 1
+} | whiptail --gauge "Iniciando..." 8 50 0
 echo
 echo
 
