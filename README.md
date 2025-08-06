@@ -19,7 +19,7 @@ Testado em:
 
 Execute o comando abaixo para executar o <b>install_speedtest.sh</b>
 ```bash
-curl -fSSL https://raw.githubusercontent.com/rafaelbagattini/speedtest2025/refs/heads/main/install_speedtest.sh | bash
+curl -fsSL https://raw.githubusercontent.com/rafaelbagattini/speedtest2025/refs/heads/main/install_speedtest.sh | bash
 ```
 Após instalar o pacote do Speedtest, execute a primeira vez (apenas digite <b>speedtest</b> e pressione >ENTER<) e aceite os termos.
 
