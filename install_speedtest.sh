@@ -1,85 +1,73 @@
 #!/bin/bash
-clear
 
-# Função para mensagens coloridas
-print_info() {
-    echo -e "\033[0;34m\e[1m[INFO]\033[0m \n\e[1m $1 \033[0m\n"
-}
-print_success() {
-    echo -e "\e[32m\e[1m[SUCCESSO]\033[0m \n\e[1m $1 \033[0m\n"
-}
-print_warning() {
-    echo -e "\e[33m\e[1m[AVISO]\033[0m \n\e[1m $1 \033[0m\n"
-}
-print_action() {
-    echo -e "\e[31m\e[1m[AÇÃO]\033[0m \n\e[1m $1 \033[0m\n"
-}
-# Verifica e remove speedtest & speedtest-cli
-print_info "Verificando pacotes speedtest e speedtest-cli..."
-if dpkg -l | grep -q speedtest; then
-    print_action "Removendo pacote speedtest..."
-    apt remove -y speedtest >/dev/null 2>&1
-    print_success "speedtest removido com sucesso."
-else
-    print_info "Pacote speedtest não instalado."
+# Cores
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+if [ "$(id -u)" -ne 0 ]; then
+  whiptail --title "Permissão insuficiente" \
+           --msgbox "Este script precisa ser executado como root." 12 60
+  exit 1
 fi
 
-if dpkg -l | grep -q speedtest-cli; then
-    print_action "Removendo pacote speedtest-cli..."
-    apt remove -y speedtest-cli >/dev/null 2>&1
-    print_success "speedtest-cli removido com sucesso."
-else
-    print_info "Pacote speedtest-cli não instalado."
+
+
+# Exibe a caixa de diálogo com tamanho fixo e título estilizado
+whiptail --msgbox "Este instalador irá remover o speedtest-cli\n  e instalar o speedtest oficial da OOKLA." 8 50
+
+# Confirmação
+if ! whiptail --yesno "Deseja continuar com a instalação?" 8 50; then
+    echo -e "❌ ${RED}Instalação cancelada.${NC}"
+    exit 1
 fi
 
-# Verifica e remove speedtest.list
-print_info "Verificando arquivo de repositório speedtest.list..."
-if [ -f /etc/apt/sources.list.d/speedtest.list ]; then
-    print_action "Removendo arquivo speedtest.list..."
-    rm -f /etc/apt/sources.list.d/speedtest.list
-    print_success "Arquivo speedtest.list removido."
-else
-    print_info "Arquivo speedtest.list não encontrado."
-fi
+# Progresso com mensagens completas e quebradas em linha
+{
+    echo "10"
+    echo "XXX"
+    echo -e "Etapa 1:\nRemovendo versão antiga do speedtest-cli..."
+    echo "XXX"
+    apt remove --purge speedtest-cli -y > /dev/null 2>&1
+    sleep 2
 
-# Verifica e instala curl
-print_info "Verificando se o curl está instalado..."
-if ! command -v curl >/dev/null 2>&1; then
-    print_action "Instalando curl..."
-    apt update >/dev/null 2>&1
-    apt install curl -y >/dev/null 2>&1
-    print_success "curl instalado com sucesso."
-else
-    print_info "curl já está instalado."
-fi
+    echo "30"
+    echo "XXX"
+    echo -e "Etapa 2:\nAdicionando repositorio da OOKLA..."
+    echo "XXX"
+    rm -f /etc/apt/sources.list.d/speedtest.list > /dev/null 2>&1
+    curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash > /dev/null 2>&1
+    sleep 2
 
-# Adiciona repositório do speedtest da Ookla
-print_action "Adicionando repositório oficial da Ookla..."
-curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash >/dev/null 2>&1
-print_success "Repositório adicionado com sucesso."
-
-# Verifica e ajusta arquivo de repositório speedtest.list
-print_info "Verificando arquivo de repositório speedtest.list..."
-if [ -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
-    print_action "Verificando versão do Linux..."
-    distro_codename=$(source /etc/os-release && echo "$VERSION_CODENAME")
-    if [[ "$distro_codename" == "noble" || "$distro_codename" == "oracular" ]]; then
-        print_action "Substituindo $distro_codename por 'jammy' em speedtest.list..."
-        sed -i "s/$distro_codename/jammy/g" /etc/apt/sources.list.d/ookla_speedtest-cli.list
-        print_success "$distro_codename substituído por 'jammy'."
-    #else
-    #    print_info "Não foi necessário ajustar o arquivo."
+    echo "50"
+    echo "XXX"
+    echo -e "Etapa 3:\nValidando compatibilidade..."
+    echo "XXX"
+    source /etc/os-release
+    if [[ "$VERSION_CODENAME" =~ ^(noble|oracular)$ ]]; then
+        sed -i "s/$VERSION_CODENAME/jammy/g" /etc/apt/sources.list.d/ookla_speedtest-cli.list > /dev/null 2>&1
     fi
-else
-    print_info "Arquivo speedtest.list não encontrado."
-fi
+    sleep 2
 
-# Atualiza repositórios
-print_action "Atualizando lista de pacotes..."
-apt update >/dev/null 2>&1
-print_success "Lista de pacotes atualizada."
+    echo "75"
+    echo "XXX"
+    echo -e "Etapa 4:\nAtualizando lista de pacotes..."
+    echo "XXX"
+    apt update -y > /dev/null 2>&1
+    sleep 2
 
-# Instala o speedtest
-print_action "Instalando o speedtest..."
-apt install speedtest -y >/dev/null 2>&1
-print_success "speedtest instalado com sucesso!! \n"
+    echo "100"
+    echo "XXX"
+    echo -e "Etapa 5:\nInstalando nova versão do speedtest..."
+    echo "XXX"
+    apt install speedtest -y > /dev/null 2>&1
+    sleep 2
+} | whiptail --gauge "Instalando Speedtest CLI. Aguarde..." 8 50 0
+echo
+echo
+
+# Mensagem final com cor
+echo -e "${GREEN}✅ Speedtest CLI instalado ou atualizado com sucesso!${NC}"
+echo -e "${CYAN}Execute 'speedtest' para testar sua conexão.${NC}"
+echo
