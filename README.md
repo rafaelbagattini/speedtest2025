@@ -50,7 +50,7 @@ apt install wget jq -y
 ```
 5. Execute o script
 ```bash
-cd speedtest && ./speedtest.sh
+cd /speedtest && ./speedtest.sh
 ```
 6. Se tudo deu certo, você deve ver três novos arquivos no seu diretório:
 * <b>print.png</b> - Imagem com o resultado do teste de velocidade
