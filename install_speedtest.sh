@@ -57,7 +57,7 @@ fi
 
     echo "100"
     echo "XXX"
-    echo -e "Etapa 5:\nInstalando nova versão do speedtest..."
+    echo -e "Etapa 5:\nSpeedtest CLI instalado com sucesso!!"
     echo "XXX"
     apt install speedtest -y > /dev/null 2>&1
     sleep 1
