@@ -1,4 +1,4 @@
-# speedtest2025
+# speedtest2026
 Script de instalação do Speedtest CLI para Linux
 
 * O script install_speedtest.sh remove a versão anterior (speedtest-cli que está no repositório padrão) e instala a versão oficial da OOKLA.
@@ -20,7 +20,7 @@ Testado em:
 
 Execute o comando abaixo para executar o <b>install_speedtest.sh</b>
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rafaelbagattini/speedtest2025/refs/heads/main/install_speedtest.sh | bash
+curl -fsSL https://raw.githubusercontent.com/rafaelbagattini/speedtest2026/refs/heads/main/install_speedtest.sh | bash
 ```
 Após instalar o pacote do Speedtest, execute a primeira vez (apenas digite <b>speedtest</b> e pressione >ENTER<) e aceite os termos.
 
@@ -35,7 +35,7 @@ mkdir /speedtest
 ```
 2. Baixe o arquivo <b>speedtest.sh</b> e salve nesse diretório.
 ```bash
-wget -qO /speedtest/speedtest.sh https://raw.githubusercontent.com/rafaelbagattini/speedtest2025/refs/heads/main/speedtest.sh
+wget -qO /speedtest/speedtest.sh https://raw.githubusercontent.com/rafaelbagattini/speedtest2026/refs/heads/main/speedtest.sh
 ```
 3. Dê permissão de execução ao arquivo baixado.
 ```bash
@@ -55,5 +55,5 @@ cd /speedtest && ./speedtest.sh
 ```
 6. Se tudo deu certo, você deve ver três novos arquivos no seu diretório:
 * <b>print.png</b> - Imagem com o resultado do teste de velocidade
-* <b>resultado.txt</b> - Resultado do teste no formato json-pretty
-* <b>imgbase64.txt</b> - Arquivo de texto contendo a imagem do print.png no formato BASE64
+* <b>resultado.json</b> - Resultado do teste no formato json-pretty
+* <b>img.b64</b> - Arquivo de texto contendo a imagem do print.png no formato BASE64
