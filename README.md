@@ -13,6 +13,7 @@ Testado em:
 * Ubuntu 24.04
 * Ubuntu 24.10
 * Debian 12
+* Debian 13
 
 <br>
 <h2>🔵 COMO INSTALAR O SPEEDTEST</h2>
